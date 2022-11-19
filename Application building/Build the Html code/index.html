@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Weather App using Flask in Python</title>
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+	<style>
+	body {
+  background-image: url('https://www.worldatlas.com/r/w768/upload/7e/2e/5a/untitled-design-79.jpg');
+   background-repeat: no-repeat;
+ background-attachment: fixed;
+  background-size: cover;
+
+	}
+</style>
+</head>
+<body>
+	<div class="container">
+	    <br><br><br>
+		<div class="row"><h2 style="color:Blue;">Weather Prediction App</h2></div>
+		<br>
+		<div class="row">
+			<b style="color:Tomato;">Get weather details of any city around the world.</b>
+		</div>
+		<div class="row">
+			{% block content %}
+				<form action="{{ url_for("index")}}" method="post">
+				<div class="form-group">
+					<label style="color:Red;" for="Email">Email:</label><br>
+				<input type="email" id="Email" name="Email" value="{{Email}}" placeholder="Email" required><br>
+					<label style="color:blue;" for="cityName"><b>Password:</b></label><br>
+				<input type="password" id="password" name="password" value="{{password}}" placeholder="password" required><br>
+				<label for="cityName"><b style="color:Yellow;">City Name:</b></label><br>
+				<input type="text" id="cityName" name="cityName" value="{{cityName}}" placeholder="City Name" required><br>
+					<br>
+				<button class="submit">Find</button>
+				{% if error is defined and error %}
+					<br><br><span class="alert alert-danger">Error: Please enter valid city name.</span></br>
+				{% endif %}
+				</div>
+			{% endblock %}
+			{% if data is defined and data %}
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Country Code</th>
+						<th>Coordinate</th>
+						<th>temperature</th>
+						<th>Pressure</th>
+						<th>Humidity</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="bg-success">{{ data.sys.country }}</td>
+						<td class="bg-info">{{data.coord.lon }} {{data.coord.lat}}</td>
+						<td class="bg-danger">{{data.main.temp }} k</td>
+						<td class="bg-warning">{{data.main.pressure}}</td>
+						<td class="bg-primary">{{data.main.humidity}}</td>
+					</tr>
+				</tbody>
+			</table>
+			{% endif %}
+		</div>
+	</div>
+</body>
+</html>
